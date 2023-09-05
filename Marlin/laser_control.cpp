@@ -21,7 +21,6 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 #include "Marlin.h"
-//#include "MarlinConfig.h"
 #include "laser_control.h"
 
 bool static laser_on = false;
@@ -33,13 +32,22 @@ void laser_init()
   laser_on = false;
   SET_OUTPUT(LASER_CURRENT_PIN);
   SET_OUTPUT(LASER_ENABLE_PIN);
-  TCNT0  = 0;
-  OCR0A = 0;
-  OCR0B = 128;
-  TCCR0A = 0;
-  TCCR0A |= ((1 << WGM01) | (1 << WGM00)); // Fast PWM mode on pin 5 and 6
-  TCCR0B = 0;
-  TCCR0B |=  (1 << CS00); // No prescale 65000Khz.
+  OCR4AH = 0;
+	OCR4AL = 0;
+	TCCR4A = 0;
+	TCCR4B = 0;
+	TCCR4C = 0;
+	TCCR4A |= (1 << WGM40); // Fast PWM mode on pin 5
+	TCCR4B |= (1 << CS40); // No prescale 65000Khz.
+  //FOR 328P UNO START
+  //TCNT0  = 0; //This parameter doesn't slow arduino Mega
+  //OCR0A = 0; //This parameter doesn't slow arduino Mega
+  //OCR0B = 128; //This parameter doesn't slow arduino Mega
+  //TCCR0A = 0; //This parameter doesn't slow arduino Mega
+  //CCR0A |= ((1 << WGM01) | (1 << WGM00)); // Fast PWM mode on pin 5 and 6 //This parameter doesn't slow arduino
+  //TCCR0B = 0; ////This parameter SLOWS arduino Mega
+  //TCCR0B |=  (1 << CS00); // No prescale 65000Khz. //This parameter doesn't slow arduino Mega
+  //FOR 328P UNO END
 }
 
 
@@ -84,8 +92,7 @@ bool is_laser_on(){
  ** move_focus_servo() - Moves the lens of the pickup
  **/
 void move_focus_servo(uint8_t pos){
-  //delay_us(3);
-  delayMicroseconds(3); //ADDED
+  _delay_us(3);
   SET_OUTPUT(FSERVO_STEP_PIN);
   if (pos == 0){
     WRITE(FSERVO_STEP_PIN,LOW);
@@ -94,7 +101,7 @@ void move_focus_servo(uint8_t pos){
     WRITE(FSERVO_STEP_PIN,HIGH);
   }
   else {
-    TCCR0A |= (1 << COM0B1);
+    TCCR0A |= (1 << COM0B1); //FOCUS TIMER-PIN NUMBER?
     OCR0B = pos;
   }
 }

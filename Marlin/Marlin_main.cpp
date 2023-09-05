@@ -7108,12 +7108,6 @@ SERIAL_PROTOCOLLNPGM(MSG_FOCUSING); //FOCUSING PRINT TO SERIAL
     //SERIAL_ECHOLN((int)sys.current_position); //ADDED FOR DEBUGGING
     planner.finish_and_disable(); //DISABLES ALL MOTOR AXIS
     		//
-        turn_laser(ON);
-        delayMicroseconds(100000);
-        turn_laser(OFF);
-        turn_laser(ON);
-        delayMicroseconds(100000);
-        turn_laser(OFF);
 		// Now we can move to machine coord. position 0
 		//
 		//planBufferLine(sys.target[X_AXIS], sys.target[Y_AXIS],HOMING_FEEDRATE_XY/4,OFF,0,0,0); //MODIFIED //DISABLED FOR NOW
@@ -15393,6 +15387,8 @@ void setup() {
   stepper.init();           // Init stepper. This enables interrupts!
 
   servo_init();             // Initialize all servos, stow servo probe
+
+  laser_init();             //Inits the laser subsystem //This function slows arduino.Issue is ongoing
 
 
   #if HAS_PHOTOGRAPH

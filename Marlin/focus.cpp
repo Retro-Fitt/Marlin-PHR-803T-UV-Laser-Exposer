@@ -1,6 +1,6 @@
 /*
   focus.c - Blue-ray Pickup laser focus module
-  Part of DiyouPCBFirm
+  Part of DiyouPCBFirm Modified by Retro-Fit
 
 Copyright (c) 2013 V.Ayllon.  All rights reserved.
 
@@ -21,7 +21,6 @@ copies.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 */
 #include "Marlin.h"
-//#include "MarlinConfig.h"
 #include "laser_control.h"
 #include "focus.h"
 
@@ -60,8 +59,7 @@ uint8_t auto_focus(){
 			SERIAL_ECHOLN((int)fpos);
 			focus_sample[i++] = (uint8_t)fpos;
 		  }
-		  //delay_ms(100);
-      delayMicroseconds(100000); //ADDED
+      _delay_ms(100); //ADDED
 	  } else {
 		  set_laser_power(prev_laser_power);
 		  turn_laser(OFF);
@@ -95,8 +93,7 @@ uint8_t get_focus_position(){
     // Move servo to max position (close to the PCB)
     //
     move_focus_servo(FSERVO_MAX);
-	//delay_ms(5);
-  delayMicroseconds(5000); //ADDED
+  _delay_ms(5);
     // Start to sampling and 
     // set state to read S-curve amplitud
     start_fe_sampler();
