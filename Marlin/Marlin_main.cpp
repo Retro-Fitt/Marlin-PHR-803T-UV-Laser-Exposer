@@ -248,7 +248,10 @@
  * ************ Custom codes - This can change to suit future G-code regulations
  * M928 - Start SD logging: "M928 filename.gco". Stop with M29. (Requires SDSUPPORT)
  * M999 - Restart after being stopped by error
- *
+ * 
+ * //CUSTOM PHR-803T G-CODE PARAMETERS\\******
+ * M1500 - Auto-Focus PHR-803T laser
+ * //CUSTOM PHR-803T G-CODE PARAMETERS\\******
  * "T" Codes
  *
  * T0-T3 - Select an extruder (tool) by index: "T<n> F<units/min>"
@@ -272,6 +275,13 @@
 #include "duration_t.h"
 #include "types.h"
 #include "parser.h"
+#include "focus.h" //ADDED FOR SUPPORT
+#include "laser_control.h" //ADDED FOR SUPPORT
+
+
+system_t sys;  //ADDED BUT NOT SURE?
+
+
 
 #if ENABLED(AUTO_POWER_CONTROL)
   #include "power.h"
@@ -7015,7 +7025,7 @@ void report_xyz_from_stepper_position() {
     analogWrite(SPINDLE_LASER_PWM_PIN, spindle_laser_power);
   }
 
-  inline void gcode_M3_M4(bool is_M3) {
+ inline void gcode_M3_M4(bool is_M3) {
 
     planner.synchronize();   // wait until previous movement commands (G0/G0/G2/G3) have completed before playing with the spindle
     #if SPINDLE_DIR_CHANGE
@@ -7075,7 +7085,83 @@ void report_xyz_from_stepper_position() {
     delay_for_power_down();
   }
 
+
+
+
+
+
+
+/**
+  * M1500 Auto-Focus PHR-803T laser
+  */
+inline void gcode_M1500() {
+planner.synchronize();
+SERIAL_PROTOCOLLNPGM(MSG_HOME_XY); //HOMING PRINT TO SERIAL
+//homeaxis(X_AXIS); //X AXIS HOMING FROM G28
+//homeaxis(Y_AXIS); //Y AXIS HOMING GROM G28
+SERIAL_PROTOCOLLNPGM(MSG_FOCUSING); //FOCUSING PRINT TO SERIAL
+		//
+		// Move to focus offset position
+		//
+		//sys.target[X_AXIS] = sys.current_position[X_AXIS] + FOCUS_OFFSET_X;
+		//sys.target[Y_AXIS] = sys.current_position[Y_AXIS] + FOCUS_OFFSET_Y;
+    //SERIAL_ECHOLN((int)sys.current_position); //ADDED FOR DEBUGGING
+    planner.finish_and_disable(); //DISABLES ALL MOTOR AXIS
+    		//
+        turn_laser(ON);
+        delayMicroseconds(100000);
+        turn_laser(OFF);
+        turn_laser(ON);
+        delayMicroseconds(100000);
+        turn_laser(OFF);
+		// Now we can move to machine coord. position 0
+		//
+		//planBufferLine(sys.target[X_AXIS], sys.target[Y_AXIS],HOMING_FEEDRATE_XY/4,OFF,0,0,0); //MODIFIED //DISABLED FOR NOW
+		//st_synchronize(); //DISABLED FOR NOW
+		//planSetPosition(sys.current_position[X_AXIS], sys.current_position[Y_AXIS]);//DISABLED FOR NOW
+    //manageInactivity();
+		//disable_motors(); //FOR BETTER FOCUS? //DISABLED FOR NOW BECAUSE MY CODE ONLY HAVE ONE AXIS DISABLE
+		// Focus the laser
+		if ((sys.current_focus_pos = auto_focus()) == FOCUS_ERROR){
+      SERIAL_PROTOCOLLNPGM(MSG_ERROR); //INSTEAD OF sendError(); FUNCTION
+			SERIAL_ERRORLNPGM(MSG_FOCUS_ERROR);
+      //SERIAL_ECHOLN((int)sys.current_focus_pos); //ADDED FOR DEBUGGING
+	   }
+    else {
+			SERIAL_PROTOCOLLNPGM(MSG_OK);//INSTEAD OF clearToSend(); FUNCTION
+			SERIAL_ECHOPGM(MSG_FOCUSED);
+			SERIAL_ECHOLN((int)sys.current_focus_pos);
+			//
+			// Move to homing offset position
+			//
+			sys.target[X_AXIS] = sys.current_position[X_AXIS] + HOMING_OFFSET_X;
+			sys.target[Y_AXIS] = sys.current_position[Y_AXIS] + HOMING_OFFSET_Y;
+			//
+			// Now we can move to machine coord. position 0
+			//
+			//planBufferLine(sys.target[X_AXIS], sys.target[Y_AXIS],HOMING_FEEDRATE_XY/4,OFF,0,0,0); //MODIFIED //DISABLED FOR NOW
+		  planner.finish_and_disable(); //DISABLES ALL MOTOR AXIS
+			// Reset position, now this is the zero
+			for(int8_t i=0; i < NUM_AXIS; i++) {
+				sys.current_position[i] = 0;
+			}
+			//planSetPosition(sys.current_position[X_AXIS], sys.current_position[Y_AXIS]); //DISABLED FOR NOW
+
+			//sys.backlash[X_AXIS]= X_DEFAULT_BACKLASH_MM; //DISABLED FOR NOW
+			//sys.backlash[Y_AXIS]= Y_DEFAULT_BACKLASH_MM; //DISABLED FOR NOW
+		}
+	}
+  
+
+
+
+
+
+
+
 #endif // SPINDLE_LASER_ENABLE
+
+
 
 /**
  * M17: Enable power on all stepper motors
@@ -7084,6 +7170,8 @@ inline void gcode_M17() {
   LCD_MESSAGEPGM(MSG_NO_MOVE);
   enable_all_steppers();
 }
+
+
 
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
 
@@ -12935,6 +13023,7 @@ void process_parsed_command() {
         case 3: gcode_M3_M4(true); break;                         // M3: Laser/CW-Spindle Power
         case 4: gcode_M3_M4(false); break;                        // M4: Laser/CCW-Spindle Power
         case 5: gcode_M5(); break;                                // M5: Laser/Spindle OFF
+        case 1500: gcode_M1500(); break;                          // M1500: Auto-Focus PHR-803T laser
       #endif
 
       case 17: gcode_M17(); break;                                // M17: Enable all steppers
@@ -15271,7 +15360,7 @@ void setup() {
     SERIAL_ECHOPGM(STRING_DISTRIBUTION_DATE);
     SERIAL_ECHOLNPGM(MSG_AUTHOR STRING_CONFIG_H_AUTHOR);
     SERIAL_ECHO_START();
-    SERIAL_ECHOLNPGM("Compiled: " __DATE__);
+    SERIAL_ECHOLNPGM("Compiled: " __DATE__" TIME: " __TIME__);
   #endif
 
   SERIAL_ECHO_START();
@@ -15304,6 +15393,7 @@ void setup() {
   stepper.init();           // Init stepper. This enables interrupts!
 
   servo_init();             // Initialize all servos, stow servo probe
+
 
   #if HAS_PHOTOGRAPH
     OUT_WRITE(PHOTOGRAPH_PIN, LOW);

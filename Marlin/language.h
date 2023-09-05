@@ -270,6 +270,14 @@
 #define MSG_DEBUG_COMMUNICATION             "COMMUNICATION"
 #define MSG_DEBUG_LEVELING                  "LEVELING"
 
+//ADDED FOR LASER CONTROL STUFF
+#define MSG_FOCUSING                        "Focusing, wait a moment please..."
+#define MSG_FOCUS_ERROR                     "Imposible to focus. Check distance from laser lens to glass."
+#define MSG_FOCUSED                         "Focused at: "
+#define MSG_OK                              "ok"
+#define MSG_ERROR                           "error"
+#define MSG_HOME_XY                          "Homing X-Y before focusing"
+
 // LCD Menu Messages
 
 #define LANGUAGE_INCL_(M) STRINGIFY_(language_##M.h)

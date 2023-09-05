@@ -44,6 +44,73 @@
 #include "utility.h"
 #include "serial.h"
 
+///////////////////////////////////////THIS PART IS TAKEN FROM DIYOUPCB/////////////////////
+//===========================================================================
+//=============================private variables=============================
+//===========================================================================
+
+// Define global system variables
+typedef struct {
+	uint8_t state;			      // The system state of the printer
+	uint8_t execute;			  // Order execution
+	float max_feedrate[NUM_AXIS]; // set the max speeds
+	float axis_steps_per_unit[NUM_AXIS];
+	unsigned long axis_steps_per_sqr_second[NUM_AXIS];
+	uint16_t current_feed_rate;	     // Current focus position.
+	uint8_t current_focus_pos;	     // Current focus position.
+	uint8_t current_laser_power;	 // The current laser power
+	uint8_t current_laser_state;	 // Current laser state ON/OFF
+	float current_position[NUM_AXIS];// Current_position in mm
+	float target[NUM_AXIS];			 // Target position in mm
+	float offset[NUM_AXIS];			 // Offset in circles
+    int8_t current_dir[NUM_AXIS];   // Current direction of travel
+	float backlash[NUM_AXIS];		 // backlash comp. in mm
+} system_t;
+
+extern system_t sys;
+
+#define ON	0x1
+#define OFF 0x0
+
+#define HIGH 0x1
+#define LOW	 0x0
+
+#define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) ((a)>(b)?(a):(b))
+
+
+
+//////THIS SECTION MUST BE FIXED///// SEE PINS.H AND MARLIN MAIN CPP CODE
+//#if MOTORS_ENABLE_PIN > -1
+//  #define enable_motors() WRITE(MOTORS_ENABLE_PIN, MOTORS_ENABLE_ON)
+//  #define disable_motors() WRITE(MOTORS_ENABLE_PIN,!MOTORS_ENABLE_ON)
+//#else
+//  #define enable_motors() ;
+//  #define disable_motors() ;
+//#endif
+//////THIS SECTION MUST BE FIXED///// SEE PINS.H AND MARLIN MAIN CPP CODE
+
+
+//void execute_runtime_cmd();
+void clearToSend(); //USED
+void sendError(); //USED
+//void manageInactivity();
+//void checkAxesActivity();
+//void clamToSoftwareEnstops(float target[NUM_AXIS]);
+//void getCommand();
+//void homeAllAxis(bool focus);
+//void config_reset_default();
+//void process_hpgl_commands(char *line);
+//void prepare_line_move();
+//void prepare_arc_move();
+//void update_position();
+//void report_status();
+//void reset_printer();
+//void delay_us(uint32_t us); //USED
+//void delay_ms(uint16_t ms); //USED
+//
+///////////////////////////////////////THIS PART IS TAKEN FROM DIYOUPCB/////////////////////
+
 void idle(
   #if ENABLED(ADVANCED_PAUSE_FEATURE)
     bool no_stepper_sleep = false  // pass true to keep steppers from disabling on timeout

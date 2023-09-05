@@ -81,7 +81,7 @@
 // User-specified version info of this build to display in [Pronterface, etc] terminal window during
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
-#define STRING_CONFIG_H_AUTHOR "(none, default config)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(Retro-Fit, Config_Ver_0.9)" // Who made the changes.
 #define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
 #define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
@@ -98,7 +98,7 @@
  */
 
 // Enable to show the bitmap in Marlin/_Bootscreen.h on startup.
-//#define SHOW_CUSTOM_BOOTSCREEN
+#define SHOW_CUSTOM_BOOTSCREEN
 
 // Enable to show the bitmap in Marlin/_Statusscreen.h on the status screen.
 //#define CUSTOM_STATUS_SCREEN_IMAGE
@@ -131,12 +131,12 @@
 // The following define selects which electronics board you have.
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_RAMPS_14_EFB
+  #define MOTHERBOARD BOARD_RAMPS_14_EFB //CORRECT 43 MOBO NUMBER
 #endif
 
 // Optional custom name for your RepStrap or other custom machine
 // Displayed in the LCD "Ready" message
-//#define CUSTOM_MACHINE_NAME "3D Printer"
+#define CUSTOM_MACHINE_NAME "PHR-803T PCB Exposer"
 
 // Define this to set a unique identifier for this printer, (Used by some programs to differentiate between machines)
 // You can use an online service to generate a random UUID. (eg http://www.uuidgenerator.net/version4)
@@ -149,7 +149,7 @@
 #define EXTRUDERS 1
 
 // Generally expected filament diameter (1.75, 2.85, 3.0, ...). Used for Volumetric, Filament Width Sensor, etc.
-#define DEFAULT_NOMINAL_FILAMENT_DIA 3.0
+#define DEFAULT_NOMINAL_FILAMENT_DIA 0.1 //CHANGED FOR TESTING
 
 // For Cyclops or any "multi-extruder" that shares a single nozzle.
 //#define SINGLENOZZLE
@@ -310,13 +310,13 @@
  *
  * :{ '0': "Not used", '1':"100k / 4.7k - EPCOS", '2':"200k / 4.7k - ATC Semitec 204GT-2", '3':"Mendel-parts / 4.7k", '4':"10k !! do not use for a hotend. Bad resolution at high temp. !!", '5':"100K / 4.7k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '501':"100K Zonestar (Tronxy X3A)", '6':"100k / 4.7k EPCOS - Not as accurate as Table 1", '7':"100k / 4.7k Honeywell 135-104LAG-J01", '8':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT", '9':"100k / 4.7k GE Sensing AL03006-58.2K-97-G1", '10':"100k / 4.7k RS 198-961", '11':"100k / 4.7k beta 3950 1%", '12':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT (calibrated for Makibox hot bed)", '13':"100k Hisens 3950  1% up to 300°C for hotend 'Simple ONE ' & hotend 'All In ONE'", '20':"PT100 (Ultimainboard V2.x)", '51':"100k / 1k - EPCOS", '52':"200k / 1k - ATC Semitec 204GT-2", '55':"100k / 1k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '60':"100k Maker's Tool Works Kapton Bed Thermistor beta=3950", '66':"Dyze Design 4.7M High Temperature thermistor", '70':"the 100K thermistor found in the bq Hephestos 2", '71':"100k / 4.7k Honeywell 135-104LAF-J01", '147':"Pt100 / 4.7k", '1047':"Pt1000 / 4.7k", '110':"Pt100 / 1k (non-standard)", '1010':"Pt1000 / 1k (non standard)", '-4':"Thermocouple + AD8495", '-3':"Thermocouple + MAX31855 (only for sensor 0)", '-2':"Thermocouple + MAX6675 (only for sensor 0)", '-1':"Thermocouple + AD595",'998':"Dummy 1", '999':"Dummy 2" }
  */
-#define TEMP_SENSOR_0 1
+#define TEMP_SENSOR_0 1 //LASER TEMP SENSOR
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
 #define TEMP_SENSOR_BED 0
-#define TEMP_SENSOR_CHAMBER 0
+#define TEMP_SENSOR_CHAMBER 0 //ROOM TEMP
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
 #define DUMMY_THERMISTOR_998_VALUE 25
@@ -340,12 +340,12 @@
 // The minimal temperature defines the temperature below which the heater will not be enabled It is used
 // to check that the wiring to the thermistor is not broken.
 // Otherwise this would lead to the heater being powered on all the time.
-#define HEATER_0_MINTEMP 5
+#define HEATER_0_MINTEMP 5 //LASER MIN TEMP
 #define HEATER_1_MINTEMP 5
 #define HEATER_2_MINTEMP 5
 #define HEATER_3_MINTEMP 5
 #define HEATER_4_MINTEMP 5
-#define BED_MINTEMP 5
+//#define BED_MINTEMP 5 //COMMENTED OUT
 
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
@@ -355,7 +355,7 @@
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
 #define HEATER_4_MAXTEMP 275
-#define BED_MAXTEMP 150
+//#define BED_MAXTEMP 150 //COMMENTED OUT
 
 //===========================================================================
 //============================= PID Settings ================================
@@ -363,7 +363,7 @@
 // PID Tuning Guide here: http://reprap.org/wiki/PID_Tuning
 
 // Comment the following line to disable PID and enable bang-bang.
-#define PIDTEMP
+//#define PIDTEMP //COMMENTED OUT
 #define BANG_MAX 255     // Limits current to nozzle while in bang-bang mode; 255=full current
 #define PID_MAX BANG_MAX // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 #define PID_K1 0.95      // Smoothing factor within any PID loop
@@ -480,8 +480,8 @@
  * details can be tuned in Configuration_adv.h
  */
 
-#define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
-#define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
+//#define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders //COMMENTED OUT
+//#define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed //COMMENTED OUT
 
 //===========================================================================
 //============================= Mechanical Settings =========================
@@ -510,9 +510,9 @@
 #define USE_XMIN_PLUG
 #define USE_YMIN_PLUG
 #define USE_ZMIN_PLUG
-//#define USE_XMAX_PLUG
-//#define USE_YMAX_PLUG
-//#define USE_ZMAX_PLUG
+//#define USE_XMAX_PLUG  //COMMENTED OUT
+//#define USE_YMAX_PLUG  //COMMENTED OUT
+//#define USE_ZMAX_PLUG  //COMMENTED OUT
 
 // Enable pullup for all endstops to prevent a floating state
 #define ENDSTOPPULLUPS
@@ -528,13 +528,13 @@
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-#define X_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MIN_PROBE_ENDSTOP_INVERTING false // set to true to invert the logic of the probe.
+#define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. //MODIFIED TO TRUE
+#define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. //MODIFIED TO TRUE
+#define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. //MODIFIED TO TRUE
+//#define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop. //COMMENTED OUT
+//#define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop. //COMMENTED OUT
+//#define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop. //COMMENTED OUT
+//#define Z_MIN_PROBE_ENDSTOP_INVERTING false // set to true to invert the logic of the probe. //COMMENTED OUT
 
 /**
  * Stepper Drivers
@@ -550,8 +550,8 @@
  *          TMC5130, TMC5130_STANDALONE
  * :['A4988', 'DRV8825', 'LV8729', 'L6470', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE']
  */
-//#define X_DRIVER_TYPE  A4988
-//#define Y_DRIVER_TYPE  A4988
+#define X_DRIVER_TYPE  TMC2208_STANDALONE //MODIFIED
+#define Y_DRIVER_TYPE  TMC2208_STANDALONE //MODIFIED
 //#define Z_DRIVER_TYPE  A4988
 //#define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
@@ -608,14 +608,14 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }  //SEEMS OK
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 10, 10, 5, 25 } //X AND Y VALUES ARE CHANGED TO 10MM/SEC
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -623,7 +623,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 10, 10, 100, 10000 } //X AND Y VALUES ARE CHANGED TO 10MM/SEC
 
 /**
  * Default Acceleration (change/s) change = mm/s
@@ -633,9 +633,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          10    // X, Y, Z and E acceleration for printing moves //CHANGED TO 10MM/SEC
+#define DEFAULT_RETRACT_ACCELERATION  10    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   10    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk (mm/s)
@@ -845,8 +845,8 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
-#define INVERT_Y_DIR true
+#define INVERT_X_DIR true //MODIFIED
+#define INVERT_Y_DIR true  //MODIFIED
 #define INVERT_Z_DIR false
 
 // @section extruder
@@ -873,19 +873,28 @@
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
 
+// How many mm add to home position to get the window's glass
+
+#define HOMING_OFFSET_X  5+3 //ADDED NOT IMPLEMENTED YET?*************
+#define HOMING_OFFSET_Y  0+2 //ADDED NOT IMPLEMENTED YET?*************
+
+// How many mm add to home position to get focus position
+
+#define FOCUS_OFFSET_X  0 //ADDED NOT IMPLEMENTED YET?**************
+#define FOCUS_OFFSET_Y  3 //ADDED NOT IMPLEMENTED YET?**************
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 200
-#define Y_BED_SIZE 200
+#define X_BED_SIZE 200 //MODIFIED AND MEASURED
+#define Y_BED_SIZE 180 //MODIFIED AND MEASURED
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE
-#define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 200
+#define X_MAX_POS X_BED_SIZE //LOOK ABOVE
+#define Y_MAX_POS Y_BED_SIZE //LOOK ABOVE
+#define Z_MAX_POS 200 //MODIFIED FROM 200 TO 55 FROM LASERSHARK
 
 /**
  * Software Endstops
@@ -1147,7 +1156,7 @@
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (50*60)
+#define HOMING_FEEDRATE_XY (10*10) //MODIFIED FROM 50*60(THIS VALUE IS 50*50 IN DIYOUWARE)
 #define HOMING_FEEDRATE_Z  (4*60)
 
 // @section calibrate
@@ -1238,7 +1247,7 @@
 //
 // M100 Free Memory Watcher
 //
-//#define M100_FREE_MEMORY_WATCHER    // Add M100 (Free Memory Watcher) to debug memory usage
+#define M100_FREE_MEMORY_WATCHER    // Add M100 (Free Memory Watcher) to debug memory usage //MODIFIED FOR MONITORING MEMORY USAGE
 
 //
 // G20/G21 Inch mode support
@@ -1272,13 +1281,13 @@
  *    P1  Raise the nozzle always to Z-park height.
  *    P2  Raise the nozzle by Z-park amount, limited to Z_MAX_POS.
  */
-//#define NOZZLE_PARK_FEATURE
+//#define NOZZLE_PARK_FEATURE //MODIFIED NOT USED YET
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
   // Specify a park position as { X, Y, Z }
-  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
-  #define NOZZLE_PARK_XY_FEEDRATE 100   // X and Y axes feedrate in mm/s (also used for delta printers Z axis)
-  #define NOZZLE_PARK_Z_FEEDRATE 5      // Z axis feedrate in mm/s (not used for delta printers)
+  #define NOZZLE_PARK_POINT { (X_MIN_POS + 8), (Y_MIN_POS + 2), 20 }
+  #define NOZZLE_PARK_XY_FEEDRATE 10   // X and Y axes feedrate in mm/s (also used for delta printers Z axis) //WAS 100 MODIFIED TO 10
+  #define NOZZLE_PARK_Z_FEEDRATE 5      // Z axis feedrate in mm/s (not used for delta printers) //NOT NEEDED IN OUR CASE
 #endif
 
 /**
@@ -1424,7 +1433,7 @@
  * you must uncomment the following option or it won't work.
  *
  */
-//#define SDSUPPORT
+#define SDSUPPORT
 
 /**
  * SD CARD: SPI SPEED
@@ -1481,7 +1490,7 @@
 //
 //  Set this option if CLOCKWISE causes values to DECREASE
 //
-//#define REVERSE_ENCODER_DIRECTION
+#define REVERSE_ENCODER_DIRECTION  //MODIFIED
 
 //
 // This option reverses the encoder direction for navigating LCD menus.
@@ -1496,7 +1505,7 @@
 //
 // Add individual axis homing items (Home X, Home Y, and Home Z) to the LCD menu.
 //
-//#define INDIVIDUAL_AXIS_HOMING_MENU
+#define INDIVIDUAL_AXIS_HOMING_MENU //MODIFIED
 
 //
 // SPEAKER/BUZZER
@@ -1504,7 +1513,7 @@
 // If you have a speaker that can produce tones, enable it here.
 // By default Marlin assumes you have a buzzer with a fixed frequency.
 //
-//#define SPEAKER
+#define SPEAKER //MODIFIED
 
 //
 // The duration and frequency for the UI feedback sound.
@@ -1513,8 +1522,8 @@
 // Note: Test audio output with the G-Code:
 //  M300 S<frequency Hz> P<duration ms>
 //
-//#define LCD_FEEDBACK_FREQUENCY_DURATION_MS 2
-//#define LCD_FEEDBACK_FREQUENCY_HZ 5000
+#define LCD_FEEDBACK_FREQUENCY_DURATION_MS 2 //MODIFIED
+#define LCD_FEEDBACK_FREQUENCY_HZ 5000 //MODIFIED
 
 //=============================================================================
 //======================== LCD / Controller Selection =========================
@@ -1654,8 +1663,10 @@
 // RepRapDiscount FULL GRAPHIC Smart Controller
 // http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller
 //
-//#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
-
+#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER //MODIFIED 
+#define ST7920_DELAY_1 DELAY_NS(0) //ADDED
+#define ST7920_DELAY_2 DELAY_NS(400) //ADDED SEE "https://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller"
+#define ST7920_DELAY_3 DELAY_NS(0) //ADDED IF ABOVE SETTING DOESN'T WORK  CHANGE 3 TO 63 NS
 //
 // ReprapWorld Graphical LCD
 // https://reprapworld.com/?products_details&products_id/1218
@@ -1813,7 +1824,7 @@
 // affecting heaters, and the fan if FAN_SOFT_PWM is enabled.
 // However, control resolution will be halved for each increment;
 // at zero value, there are 128 effective control positions.
-#define SOFT_PWM_SCALE 0
+#define SOFT_PWM_SCALE 0 // MAY BE MODIFIED FROM 0 TO 5********************
 
 // If SOFT_PWM_SCALE is set to a value higher than 0, dithering can
 // be used to mitigate the associated resolution loss. If enabled,

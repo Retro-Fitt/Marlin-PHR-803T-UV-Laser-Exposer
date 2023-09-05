@@ -2,7 +2,7 @@
 //*
 //*
 //*
-//************* THIS FILE IS FOR MEGA+DIYOUPCB SHIELD BOARD. ITS MODIFIED ACCORDING TO DIYOUPCB SHIELD PINOUT FOR COMPABILITY ******************/////
+//************* THIS FILE IS FOR MEGA+RAMPS 1.4 BOARD. ITS MODIFIED ACCORDING TO TWINTEETH FIRMWARE ******************/////
 //*
 //*
 //*
@@ -82,14 +82,14 @@
 //
 // Limit Switches
 //
-#define X_MIN_PIN           54 //WAS 3 // OK **OK**
+#define X_MIN_PIN           3 //OK
 #ifndef X_MAX_PIN
-  #define X_MAX_PIN         -1 // MODIFIED FROM 2 **OK**
+  #define X_MAX_PIN         -1 // MODIFIED FROM 2
 #endif
-#define Y_MIN_PIN          55 //WAS 14 //OK **OK**
-#define Y_MAX_PIN          -1 //MODIFIED FROM 15 **OK**
-#define Z_MIN_PIN          56 //WAS 18 //OK **OK**
-#define Z_MAX_PIN          -1 //MODIFIED FROM 19 **OK**
+#define Y_MIN_PIN          14 //OK
+#define Y_MAX_PIN          -1 //MODIFIED FROM 15
+#define Z_MIN_PIN          18 //OK
+#define Z_MAX_PIN          -1 //MODIFIED FROM 19
 
 //
 // Z Probe (when not Z_MIN_PIN)
@@ -97,40 +97,34 @@
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN  32 //UNKNOWN FOR NOW
 #endif
-#define FSERVO_STEP_PIN    5		// Focus servo step pin //OK **OK**
-#define LASER_CURRENT_PIN  6		// Laser power pin //OK **OK**   IMPLEMENTED ON M3 
-#define LASER_ENABLE_PIN   11		// Laser on/off //LASER_SEL1_PIN IS 11 LASER_SEL2_PIN IS 4 //OK **OK** IMPLEMENTED ON M3 
+#define FSERVO_STEP_PIN    5		// Focus servo step pin //OK
+#define LASER_CURRENT_PIN  6		// Laser power pin //OK
+#define LASER_ENABLE_PIN   11		// Laser on/off //LASER_SEL1_PIN IS 11 LASER_SEL2_PIN IS 4 //OK
 #define FE_SIGNAL_PIN      57		//A3  //WAS 17 CHANGED TO 57, NO MORE NEGATIVE WARNINGS //OK
 //
 // Steppers
 //
-#define X_STEP_PIN         3 //WAS 54 //OK **OK**
-#define X_DIR_PIN          7 //WAS 55 //OK  **OK**
-#define X_ENABLE_PIN       8 //WAS 38 MOTORS ENABLE PIN //OK **OK**
+#define X_STEP_PIN         54 //OK
+#define X_DIR_PIN          55 //OK
+#define X_ENABLE_PIN       38 //OK
 #ifndef X_CS_PIN
-  #define X_CS_PIN         -1 //WAS 53//UNKNOWN FOR NOW
+  #define X_CS_PIN         53 //UNKNOWN FOR NOW
 #endif
 
-#define Y_STEP_PIN         2 //WAS 60 //OK **OK**
-#define Y_DIR_PIN          4 //WAS 61 //OK **OK**
-#define Y_ENABLE_PIN       8 //WAS 56 MOTORS ENABLE PIN //OK **OK**
+#define Y_STEP_PIN         60 //OK
+#define Y_DIR_PIN          61 //OK
+#define Y_ENABLE_PIN       56 //OK
 #ifndef Y_CS_PIN
-  #define Y_CS_PIN         -1 //WAS 49//UNKNOWN FOR NOW
+  #define Y_CS_PIN         49 //UNKNOWN FOR NOW
 #endif
 
-#define Z_STEP_PIN         9 //WAS 46//WILL NOT BE USED BUT IMPLEMENTED //OK
-#define Z_DIR_PIN          10 //WAS 48//WILL NOT BE USED BUT IMPLEMENTED //OK
-#define Z_ENABLE_PIN       8 //WAS 62//WILL NOT BE USED BUT IMPLEMENTED //OK
+#define Z_STEP_PIN         46 //WILL NOT BE USED //OK
+#define Z_DIR_PIN          48 //WILL NOT BE USED //OK
+#define Z_ENABLE_PIN       62 //WILL NOT BE USED //OK
 #ifndef Z_CS_PIN
-  #define Z_CS_PIN         -1 //WAS 40//UNKNOWN FOR NOW
+  #define Z_CS_PIN         40
 #endif
-//
-//IF NEEDED FOR SOMETHING//
-#define DOOR_PIN           58   	//A4  **OK**
-#define PRINT_LED		       59   	//A5  **OK**
-#define RED_LED		    	   12		  // Red led on/off  **OK**
-//IF NEEDED FOR SOMETHING//
-//
+
 #define E0_STEP_PIN        26
 #define E0_DIR_PIN         28
 #define E0_ENABLE_PIN      24
@@ -295,7 +289,7 @@
   #define RAMPS_D8_PIN      8
 #endif
 #ifndef RAMPS_D9_PIN
-  #define RAMPS_D9_PIN      9 
+  #define RAMPS_D9_PIN      9
 #endif
 #ifndef RAMPS_D10_PIN
   #define RAMPS_D10_PIN    10
@@ -336,7 +330,7 @@
 //
 // Misc. Functions
 //
-#define SDSS               53 
+#define SDSS               53
 #define LED_PIN            13
 
 #ifndef FILWIDTH_PIN
@@ -366,9 +360,9 @@
 //
 #if ENABLED(SPINDLE_LASER_ENABLE) && !PIN_EXISTS(SPINDLE_LASER_ENABLE)
   #if !defined(NUM_SERVOS) || NUM_SERVOS == 0 // try to use servo connector first
-    #define SPINDLE_LASER_ENABLE_PIN  LASER_ENABLE_PIN   // Pin should have a pullup/pulldown! //MODIFIED WAS 4
-    #define SPINDLE_LASER_PWM_PIN     LASER_CURRENT_PIN   // MUST BE HARDWARE PWM //MODIFIED WAS 6
-    #define SPINDLE_DIR_PIN           40    //MODIFIED WAS 5
+    #define SPINDLE_LASER_ENABLE_PIN  4   // Pin should have a pullup/pulldown!
+    #define SPINDLE_LASER_PWM_PIN     6   // MUST BE HARDWARE PWM
+    #define SPINDLE_DIR_PIN           5
   #elif !(ENABLED(ULTRA_LCD) && ENABLED(NEWPANEL) \
       && (ENABLED(PANEL_ONE) || ENABLED(VIKI2) || ENABLED(miniVIKI) || ENABLED(MINIPANEL) || ENABLED(REPRAPWORLD_KEYPAD)))  // try to use AUX 2
     #define SPINDLE_LASER_ENABLE_PIN 40   // Pin should have a pullup/pulldown!
@@ -407,8 +401,8 @@
 
   #elif ENABLED(NEWPANEL) && ENABLED(PANEL_ONE)
 
-    #define LCD_PINS_RS         40 
-    #define LCD_PINS_ENABLE     42 
+    #define LCD_PINS_RS         40
+    #define LCD_PINS_ENABLE     42
     #define LCD_PINS_D4         65
     #define LCD_PINS_D5         66
     #define LCD_PINS_D6         44
@@ -441,19 +435,19 @@
         #define LCD_PINS_DC     25   // Set as output on init
         #define LCD_PINS_RS     27   // Pull low for 1s to init
         // DOGM SPI LCD Support
-        #define DOGLCD_CS       16 
-        #define DOGLCD_MOSI     17 
-        #define DOGLCD_SCK      23 
+        #define DOGLCD_CS       16
+        #define DOGLCD_MOSI     17
+        #define DOGLCD_SCK      23
         #define DOGLCD_A0       LCD_PINS_DC
-      #else ///////////BELOW LINES ARE CUSTOM PINOUT FOR LCD//////////
-        #define LCD_PINS_RS    22 //WAS 16 
-        #define LCD_PINS_ENABLE 24 //WAS 17
-        #define LCD_PINS_D4     26 //WAS 23
-        #define LCD_PINS_D5     28 //WAS 25
-        #define LCD_PINS_D6     30 //WAS 27
+      #else
+        #define LCD_PINS_RS     16
+        #define LCD_PINS_ENABLE 17
+        #define LCD_PINS_D4     23
+        #define LCD_PINS_D5     25
+        #define LCD_PINS_D6     27
       #endif
 
-      #define LCD_PINS_D7       32 //WAS 29
+      #define LCD_PINS_D7       29
 
       #if DISABLED(NEWPANEL)
         #define BEEPER_PIN      33
@@ -477,21 +471,21 @@
   //
   #if ENABLED(NEWPANEL)
 
-    #if ENABLED(REPRAP_DISCOUNT_SMART_CONTROLLER) ////BELOW IS CUSTOM PINOUT CONFIG ALSO////
+    #if ENABLED(REPRAP_DISCOUNT_SMART_CONTROLLER)
 
-      #define BEEPER_PIN        37 //37 OK
+      #define BEEPER_PIN        37
 
       #if ENABLED(CR10_STOCKDISPLAY)
-        #define BTN_EN1         17 
+        #define BTN_EN1         17
         #define BTN_EN2         23
       #else
-        #define BTN_EN1         31 //31 OK
-        #define BTN_EN2         33 //33 OK
+        #define BTN_EN1         31
+        #define BTN_EN2         33
       #endif
 
-      #define BTN_ENC           35 //35 OK
-      #define SD_DETECT_PIN     49 //49 OK
-      #define KILL_PIN          48 //WAS 41 MAYBE CONNECTED IN FUTURE
+      #define BTN_ENC           35
+      #define SD_DETECT_PIN     49
+      #define KILL_PIN          41
 
       #if ENABLED(BQ_LCD_SMART_CONTROLLER)
         #define LCD_BACKLIGHT_PIN 39
@@ -543,7 +537,7 @@
       #define DOGLCD_CS         29
       #define DOGLCD_A0         27
 
-      #define BEEPER_PIN        23 
+      #define BEEPER_PIN        23
       #define LCD_BACKLIGHT_PIN 33
 
       #define BTN_EN1           35
