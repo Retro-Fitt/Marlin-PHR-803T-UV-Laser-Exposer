@@ -20,7 +20,13 @@ The original project was working fine until i get some issues with HPGL/1 code g
 
 Since it is quite an old project (2014 dated?) it was designed to use with EAGLE CAD software with HPGL/1 export.I use KiCAD in my projects which exports HPGL/2(which i cannot use with my printer), Gerber,DXF etc.So i have to made and DXF export in KiCAD open it with AutoCAD Plot it with HPGL/1 manually edit code to printers parameter and only in that case i can use it, but since it is a conversion issue, AutoCAD doesn't export HPGL/1 like EAGLE does.Here is some pictures so you can understand what i mean:
 
+![1](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/54075124-6101-4d57-805a-f69586c75d06)
+
+
 Also in small segments such as numbers it overoxposes dry film:
+
+![2](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/7c11c516-0669-4809-9e1d-7f629971bd88)
+![3](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/77758d1e-8b81-4837-9713-8086d0e6d170)
 
 The AutoCAD exports HPGL/1 differently (Diagonal lines on horizontal, Overlapping lines on complex objects such as text and numbers) and my PCB come out as overexposed or underexposed. I have tried many programs to convert DXF, Gerber, postscript such as PloView and GerbView none of them work for me to correctly translate into HPGL/1.Also used different laser power levels and tried many many options but it made me crazy.
 
