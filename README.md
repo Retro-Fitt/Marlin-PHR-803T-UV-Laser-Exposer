@@ -20,13 +20,15 @@ The original design was working fine until i get some issues with HPGL/1 code ge
 
 Since it is quite an old project (2014 dated?) it was designed to use with EAGLE CAD software with HPGL/1 export.I use KiCAD in my projects which exports HPGL/2(which i cannot use with my printer), Gerber,DXF etc.So i have to made and DXF export in KiCAD open it with AutoCAD Plot it with HPGL/1 manually edit code to printers parameter and only in that case i can use it, but since it is a conversion issue, AutoCAD doesn't export HPGL/1 like EAGLE does.Here is some pictures so you can understand what i mean:
 
-![1](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/54075124-6101-4d57-805a-f69586c75d06)
+
+![1](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/2b16004d-4faa-4acb-9769-3c8fe575952f)
 
 
 Also in small segments such as numbers it overoxposes dry film:
 
-![2](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/7c11c516-0669-4809-9e1d-7f629971bd88)
-![3](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/77758d1e-8b81-4837-9713-8086d0e6d170)
+![3](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/d48fd775-ea9d-4c31-8d4d-76278363edcf)
+![2](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/69304bcb-427a-47b0-bbef-0e4b76bf2b8a)
+
 
 The AutoCAD exports HPGL/1 differently (Diagonal lines on horizontal, Overlapping lines on complex objects such as text and numbers) and my PCB come out as overexposed or underexposed. I have tried many programs to convert DXF, Gerber, postscript such as PloView and GerbView none of them work for me to correctly translate into HPGL/1.Also used different laser power levels and tried many many options but it made me crazy.
 
@@ -45,32 +47,34 @@ I didn't want to use TwinTeeth mechanical design because it is a delta robot and
 The hardware is same as "DiyouPDriverV1.0" and "DiyouPShieldV1.0". Original project uses Arduino UNO but since most of UNO shields are compatible with MEGA it is suitable. Another custom shield may be designed for MEGA but i already printed and assembled shield and driver for UNO.
 
 Assembled DiyouPDriverV1.0:
-![Driver](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/ce2b91ec-410a-420e-94ab-1e3c3031c672)
 
+![Driver](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/cc20ee2f-d8e3-483e-a6f9-91fc2f47079e)
 
-Assembled DiyouPShieldV1.0:
-![Shield](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/8767e4c8-8d2b-4cc0-bf65-42de6b71f542)
+Assembled  DiyouPShieldV1.0: 
+
+![Shield](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/421fd321-06d8-462f-8529-1794fd125a0e)
+
 
 I translated Eagle PCB Design files to Kicad 7.0 you can find in my another repo:
 
-![Kicad Shield](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/2de5714f-968f-41d8-922c-51229d4563ed)
-![Kicad_3D Shield](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/5f1855b1-e959-4634-b4e1-a35498e02cea)
 
-
-![Kicad Driver](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/be89a58e-2d5d-481a-b763-45c61ac8a69a)
-![Kicad 3D Driver](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/6bbae089-651e-4d78-ac5f-94aa0049ab59)
+![Shield3D](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/c68323bf-ea74-4169-910b-779b1bbb3761)
+![Shield](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/4f5a3b34-efe1-4cda-b9b8-551a54840fa1)
+![Driver3D](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/9bb71832-a451-4ed3-9ad7-be9151eda701)
+![Driver](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/d7e0b176-f176-4c11-836b-ac6525846918)
 
 TODO
 
 The main disadvantage using shield for UNO is you cannot install a LCD easily.I had to solder 15 pins manually to LCD and SD card controller.RAMPS 1.4 Shield is maybe easier but too much hassle to connect RAMPS 1.4 to Laser Driver. So i have this custom connection to LCD and SD card and modified pins_RAMPS.H accordingly.
 
-Here is pinout for LCD and SD Card interface:
+Here is pinout for LCD, SD Card and Shield interface:
 
-![Pinout_For_Lcd_SD](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/a6570e7f-58ea-41c7-9a5e-ee35808535dc)
+![Pinouts](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/7ed14288-38ff-4021-8965-84aedeb375c4)
+
 
 RepRap Ramps 1.4 Compatible 128x64 Full Graphic Smart LCD Interface to Arduino MEGA 
 
-![lcd](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/18ac8f2d-80fa-4526-994b-706ca84d29a6)
+![lcd](https://github.com/Retro-Fitt/Marlin-PHR-803T-UV-Laser-Exposer/assets/5271947/c2c03a1d-9910-41b6-b5c4-871f5e59f73c)
 
 And soldered board for EXP1 and EXP2:
 
