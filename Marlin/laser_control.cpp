@@ -30,9 +30,9 @@ bool static laser_on = false;
 void laser_init()
 {
   laser_on = false;
-  SET_OUTPUT(LASER_CURRENT_PIN);
   SET_OUTPUT(LASER_ENABLE_PIN);
-  OCR4AH = 0;
+  SET_OUTPUT(LASER_CURRENT_PIN);
+	OCR4AH = 0;
 	OCR4AL = 0;
 	TCCR4A = 0;
 	TCCR4B = 0;
@@ -104,6 +104,17 @@ void move_focus_servo(uint8_t pos){
     TCCR0A |= (1 << COM0B1); //FOCUS TIMER-PIN NUMBER?
     OCR0B = pos;
   }
+// Set laser focus step (5) pin, OC3A Timer 3, fast pwm
+	//SET_OUTPUT(FSERVO_STEP_PIN);
+	//OCR3AH = 0;
+	//OCR3AL = 128;
+	//TCCR3A = 0;
+	//TCCR3B = 0;
+	//TCCR3C = 0;
+	//TCCR3A |= (1 << WGM30); // Fast PWM mode on pin 5
+	//TCCR3B |=  (1 << CS30); // No prescale 65000Khz.
+	// Set laser current (6) pin OC4A Timer 4, fast pwm
+
 }
 
 
