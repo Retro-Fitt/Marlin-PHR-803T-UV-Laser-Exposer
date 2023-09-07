@@ -31,7 +31,17 @@ void laser_init()
 {
   laser_on = false;
   SET_OUTPUT(LASER_ENABLE_PIN);
-  SET_OUTPUT(LASER_CURRENT_PIN);
+  	// Set laser focus step (5) pin, OC3A Timer 3, fast pwm
+	SET_OUTPUT(FSERVO_STEP_PIN);
+	OCR3AH = 0;
+	OCR3AL = 128;
+	TCCR3A = 0;
+	TCCR3B = 0;
+	TCCR3C = 0;
+	TCCR3A |= (1 << WGM30); // Fast PWM mode on pin 5
+	TCCR3B |=  (1 << CS30); // No prescale 65000Khz.
+	// Set laser current (6) pin OC4A Timer 4, fast pwm
+	SET_OUTPUT(LASER_CURRENT_PIN);
 	OCR4AH = 0;
 	OCR4AL = 0;
 	TCCR4A = 0;
@@ -56,14 +66,14 @@ void laser_init()
  **/
 void set_laser_power(uint8_t level){
   SET_OUTPUT(LASER_CURRENT_PIN);
-  TCCR0A |= (1 << COM0A1);
-  OCR0A = level;
+  TCCR4A |= (1 << COM4A1); //MODIFIED
+  OCR4A = level; //MODIFIED
 }
 /**
  ** get_laser_power() - Get the intensity of laser
  **/
 uint8_t get_laser_power(){
-  return OCR0A;
+  return OCR4A;
 }
 
 /**
@@ -89,33 +99,10 @@ bool is_laser_on(){
 }
 
 /**
- ** move_focus_servo() - Moves the lens of the pickup
- **/
+** move_focus_servo() - Moves the lens of the pickup
+**/
 void move_focus_servo(uint8_t pos){
-  _delay_us(3);
-  SET_OUTPUT(FSERVO_STEP_PIN);
-  if (pos == 0){
-    WRITE(FSERVO_STEP_PIN,LOW);
-  } 
-  else if (pos == 255){
-    WRITE(FSERVO_STEP_PIN,HIGH);
-  }
-  else {
-    TCCR0A |= (1 << COM0B1); //FOCUS TIMER-PIN NUMBER?
-    OCR0B = pos;
-  }
-// Set laser focus step (5) pin, OC3A Timer 3, fast pwm
-	//SET_OUTPUT(FSERVO_STEP_PIN);
-	//OCR3AH = 0;
-	//OCR3AL = 128;
-	//TCCR3A = 0;
-	//TCCR3B = 0;
-	//TCCR3C = 0;
-	//TCCR3A |= (1 << WGM30); // Fast PWM mode on pin 5
-	//TCCR3B |=  (1 << CS30); // No prescale 65000Khz.
-	// Set laser current (6) pin OC4A Timer 4, fast pwm
-
+	_delay_us(3);
+	SET_OUTPUT(FSERVO_STEP_PIN);
+	set_focus_pos(pos);
 }
-
-
-

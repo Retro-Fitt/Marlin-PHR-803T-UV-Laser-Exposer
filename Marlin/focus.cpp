@@ -47,6 +47,7 @@ uint8_t auto_focus(){
   //
   prev_laser_power = get_laser_power();
   set_laser_power(LASER_FOCUS_POWER);
+  SERIAL_PROTOCOLLNPGM(DEBUG_LASER_POWER_SET); //FOR DEBUGGING STUFF
   //
   // Get focus position
   // Try some times and get average focus
@@ -57,6 +58,7 @@ uint8_t auto_focus(){
 	  if ((fpos = get_focus_position()) != FOCUS_ERROR){
 		  if (fpos > FE_MIN_AMP_THRESHOLD){
 			SERIAL_ECHOLN((int)fpos);
+      SERIAL_PROTOCOLLNPGM(DEBUG_FE); //FOR DEBUGGING STUFF
 			focus_sample[i++] = (uint8_t)fpos;
 		  }
       _delay_ms(100); //ADDED
@@ -89,6 +91,7 @@ uint8_t get_focus_position(){
   for (uint8_t j = 0; j < MAX_FOCUS_SWEEP; j++){
     // Turn on laser
     turn_laser(ON);
+    //SERIAL_PROTOCOLLNPGM(DEBUG_LASER_TURNED_ON);
     //
     // Move servo to max position (close to the PCB)
     //
@@ -97,6 +100,7 @@ uint8_t get_focus_position(){
     // Start to sampling and 
     // set state to read S-curve amplitud
     start_fe_sampler();
+    //SERIAL_PROTOCOLLNPGM(DEBUG_START_FE_SAMPLER); //FOR DEBUGGING STUFF
     set_state(FE_AMPLITUD_ST);
     // Init variables
     fe_max_val = MIN_FE_VALUE;
@@ -106,7 +110,7 @@ uint8_t get_focus_position(){
     // move servo from up to Down
     //
     for (fe_servo_pos = FSERVO_MAX; fe_servo_pos > FSERVO_MIN; fe_servo_pos--){
-      move_focus_servo(fe_servo_pos);  
+      move_focus_servo(fe_servo_pos); // FE SERVO POS VARIABLE WORKS FROM 230 TO 0
     }
     //
     // Set state to wait, while calc. amplitud
@@ -118,6 +122,13 @@ uint8_t get_focus_position(){
     fe_amplitud = (fe_max_val-fe_min_val);
     //
     // If Amplitud has a miminum threshold, try to focus
+    SERIAL_ECHOPGM(" fe_amplitud: "); //DEBUG
+		SERIAL_ECHO((int)fe_amplitud); //DEBUG
+    SERIAL_ECHOPGM(" Max: "); //DEBUG
+		SERIAL_ECHO((int)fe_max_val); //DEBUG
+		SERIAL_ECHOPGM(" Min: "); //DEBUG
+		SERIAL_ECHOLN((int)fe_min_val); //DEBUG
+
     //
     if (fe_amplitud > FE_MIN_AMP_THRESHOLD){
       // Move servo down to up

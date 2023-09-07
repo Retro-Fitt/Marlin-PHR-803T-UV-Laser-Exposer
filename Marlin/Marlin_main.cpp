@@ -7119,7 +7119,7 @@ SERIAL_PROTOCOLLNPGM(MSG_FOCUSING); //FOCUSING PRINT TO SERIAL
 		if ((sys.current_focus_pos = auto_focus()) == FOCUS_ERROR){
       SERIAL_PROTOCOLLNPGM(MSG_ERROR); //INSTEAD OF sendError(); FUNCTION
 			SERIAL_ERRORLNPGM(MSG_FOCUS_ERROR);
-      //SERIAL_ECHOLN((int)sys.current_focus_pos); //ADDED FOR DEBUGGING
+      SERIAL_ECHOLN((int)sys.current_focus_pos); //ADDED FOR DEBUGGING
 	   }
     else {
 			SERIAL_PROTOCOLLNPGM(MSG_OK);//INSTEAD OF clearToSend(); FUNCTION
@@ -15388,7 +15388,7 @@ void setup() {
 
   servo_init();             // Initialize all servos, stow servo probe
 
-  laser_init();             //Inits the laser subsystem //This function slows arduino.Issue is ongoing
+  laser_init();             //Inits the laser subsystem for PHR-803T
 
 
   #if HAS_PHOTOGRAPH

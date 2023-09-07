@@ -276,7 +276,11 @@
 #define MSG_FOCUSED                         "Focused at: "
 #define MSG_OK                              "ok"
 #define MSG_ERROR                           "error"
-#define MSG_HOME_XY                          "Homing X-Y before focusing"
+#define MSG_HOME_XY                         "Homing X-Y before focusing"
+#define DEBUG_LASER_POWER_SET               "Laser Power is set for focusing"
+#define DEBUG_FE                            "fpos is greater than FE_MIN_AMP_THRESHOLD"
+#define DEBUG_LASER_TURNED_ON               "Laser Turned ON for focusing"
+#define DEBUG_START_FE_SAMPLER              "Starting FE Sampler"
 
 // LCD Menu Messages
 

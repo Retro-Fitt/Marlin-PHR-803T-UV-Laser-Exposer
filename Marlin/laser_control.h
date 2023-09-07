@@ -31,5 +31,13 @@ uint8_t get_laser_power();
 void move_focus_servo(uint8_t pos);
 bool is_laser_on();
 
+/**
+** set_focus_pos() - Moves the focus lens (Servo) to the focus position
+**/
+FORCE_INLINE void set_focus_pos(uint8_t pos){ //ADDED
+	TCCR3A |= (1 << COM3A1); //ADDED
+	OCR3AH = 0; //ADDED
+	OCR3AL = pos; //ADDED
+}
 
 #endif

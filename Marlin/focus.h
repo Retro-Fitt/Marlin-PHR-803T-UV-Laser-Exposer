@@ -43,7 +43,7 @@ copies.
 #define NUM_FOCUS_SAMPLES  15   // Num focus samples
 #define FOCUS_TIMEOUT      30000  // Focus timeout in ADC ticks at 2000Khz.
 
-#define FE_MIN_AMP_THRESHOLD  128  // No object limit
+#define FE_MIN_AMP_THRESHOLD  128  // No object limit //MODIFIED FOR TESTING WAS 128
 #define FE_NOISE_DIVIDER	   3  // Used to find the noise threshold
 #define FE_AMPLITUD_DIVIDER   48  // Amplitud/(this) is the focus threshold 
 
