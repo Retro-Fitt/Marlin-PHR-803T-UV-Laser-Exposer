@@ -47,7 +47,6 @@ uint8_t auto_focus(){
   //
   prev_laser_power = get_laser_power();
   set_laser_power(LASER_FOCUS_POWER);
-  //SERIAL_PROTOCOLLNPGM(DEBUG_LASER_POWER_SET); //FOR DEBUGGING STUFF
   //
   // Get focus position
   // Try some times and get average focus
@@ -96,11 +95,10 @@ uint8_t get_focus_position(){
     // Move servo to max position (close to the PCB)
     //
     move_focus_servo(FSERVO_MAX);
-  delay_ms(5);
+  delay_ms(5); //WAS 5
     // Start to sampling and 
     // set state to read S-curve amplitud
     start_fe_sampler();
-    //SERIAL_PROTOCOLLNPGM(DEBUG_START_FE_SAMPLER); //FOR DEBUGGING STUFF
     set_state(FE_AMPLITUD_ST);
     // Init variables
     fe_max_val = MIN_FE_VALUE;
@@ -143,6 +141,7 @@ uint8_t get_focus_position(){
         cli();
 		if (fe_state == FE_ERROR_ST){
 			sei();
+      SERIAL_ECHOLN((int)fe_state); //DEBUG
 			break;
 		}
         if (fe_state == FE_FOCUSED_ST){ 
