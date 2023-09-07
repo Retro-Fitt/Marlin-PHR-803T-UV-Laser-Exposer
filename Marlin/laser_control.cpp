@@ -93,7 +93,8 @@ bool is_laser_on(){
 ** move_focus_servo() - Moves the lens of the pickup
 **/
 void move_focus_servo(uint8_t pos){
-	delay_us(3); //WAS 3
+	//delay_us(3); //WAS 3
+	delayMicroseconds(3); //ADDED
 	SET_OUTPUT(FSERVO_STEP_PIN);
 	set_focus_pos(pos);
 }

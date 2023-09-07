@@ -60,7 +60,8 @@ uint8_t auto_focus(){
       //SERIAL_PROTOCOLLNPGM(DEBUG_FE); //FOR DEBUGGING STUFF
 			focus_sample[i++] = (uint8_t)fpos;
 		  }
-      delay_ms(100); //ADDED
+      //delay_ms(100); //ADDED
+      delayMicroseconds(100); //ADDED
 	  } else {
 		  set_laser_power(prev_laser_power);
 		  turn_laser(OFF);
@@ -95,7 +96,8 @@ uint8_t get_focus_position(){
     // Move servo to max position (close to the PCB)
     //
     move_focus_servo(FSERVO_MAX);
-  delay_ms(5); //WAS 5
+  //delay_ms(5); //WAS 5
+  delayMicroseconds(5); //ADDED
     // Start to sampling and 
     // set state to read S-curve amplitud
     start_fe_sampler();
