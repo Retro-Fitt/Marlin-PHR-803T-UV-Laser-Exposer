@@ -47,7 +47,7 @@ uint8_t auto_focus(){
   //
   prev_laser_power = get_laser_power();
   set_laser_power(LASER_FOCUS_POWER);
-  SERIAL_PROTOCOLLNPGM(DEBUG_LASER_POWER_SET); //FOR DEBUGGING STUFF
+  //SERIAL_PROTOCOLLNPGM(DEBUG_LASER_POWER_SET); //FOR DEBUGGING STUFF
   //
   // Get focus position
   // Try some times and get average focus
@@ -58,7 +58,7 @@ uint8_t auto_focus(){
 	  if ((fpos = get_focus_position()) != FOCUS_ERROR){
 		  if (fpos > FE_MIN_AMP_THRESHOLD){
 			SERIAL_ECHOLN((int)fpos);
-      SERIAL_PROTOCOLLNPGM(DEBUG_FE); //FOR DEBUGGING STUFF
+      //SERIAL_PROTOCOLLNPGM(DEBUG_FE); //FOR DEBUGGING STUFF
 			focus_sample[i++] = (uint8_t)fpos;
 		  }
       _delay_ms(100); //ADDED
@@ -122,12 +122,12 @@ uint8_t get_focus_position(){
     fe_amplitud = (fe_max_val-fe_min_val);
     //
     // If Amplitud has a miminum threshold, try to focus
-    SERIAL_ECHOPGM(" fe_amplitud: "); //DEBUG
-		SERIAL_ECHO((int)fe_amplitud); //DEBUG
-    SERIAL_ECHOPGM(" Max: "); //DEBUG
-		SERIAL_ECHO((int)fe_max_val); //DEBUG
-		SERIAL_ECHOPGM(" Min: "); //DEBUG
-		SERIAL_ECHOLN((int)fe_min_val); //DEBUG
+    //SERIAL_ECHOPGM(" fe_amplitud: "); //DEBUG
+		//SERIAL_ECHO((int)fe_amplitud); //DEBUG
+    //SERIAL_ECHOPGM(" Max: "); //DEBUG
+		//SERIAL_ECHO((int)fe_max_val); //DEBUG
+		//SERIAL_ECHOPGM(" Min: "); //DEBUG
+		//SERIAL_ECHOLN((int)fe_min_val); //DEBUG
 
     //
     if (fe_amplitud > FE_MIN_AMP_THRESHOLD){
