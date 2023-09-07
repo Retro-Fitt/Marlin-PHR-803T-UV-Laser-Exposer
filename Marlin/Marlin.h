@@ -78,6 +78,9 @@ extern system_t sys;
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))
 
+//BELOW ADDED FOR DELAY///
+void delay_us(uint32_t us);
+void delay_ms(uint16_t ms);
 
 
 //////THIS SECTION MUST BE FIXED///// SEE PINS.H AND MARLIN MAIN CPP CODE
