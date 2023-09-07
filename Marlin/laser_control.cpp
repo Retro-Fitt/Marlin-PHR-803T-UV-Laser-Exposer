@@ -49,15 +49,6 @@ void laser_init()
 	TCCR4C = 0;
 	TCCR4A |= (1 << WGM40); // Fast PWM mode on pin 5
 	TCCR4B |= (1 << CS40); // No prescale 65000Khz.
-  //FOR 328P UNO START
-  //TCNT0  = 0; //This parameter doesn't slow arduino Mega
-  //OCR0A = 0; //This parameter doesn't slow arduino Mega
-  //OCR0B = 128; //This parameter doesn't slow arduino Mega
-  //TCCR0A = 0; //This parameter doesn't slow arduino Mega
-  //CCR0A |= ((1 << WGM01) | (1 << WGM00)); // Fast PWM mode on pin 5 and 6 //This parameter doesn't slow arduino
-  //TCCR0B = 0; ////This parameter SLOWS arduino Mega
-  //TCCR0B |=  (1 << CS00); // No prescale 65000Khz. //This parameter doesn't slow arduino Mega
-  //FOR 328P UNO END
 }
 
 

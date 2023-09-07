@@ -7091,6 +7091,8 @@ void report_xyz_from_stepper_position() {
 
 
 
+
+
 /**
   * M1500 Auto-Focus PHR-803T laser
   */
@@ -7145,10 +7147,21 @@ SERIAL_PROTOCOLLNPGM(MSG_FOCUSING); //FOCUSING PRINT TO SERIAL
 			//sys.backlash[Y_AXIS]= Y_DEFAULT_BACKLASH_MM; //DISABLED FOR NOW
 		}
 	}
-  
 
 
-
+/**
+  * M1501 PHR-803T Laser On // M1501  power S = % of power from 0 to max.
+  */
+inline void gcode_M1501() {
+{
+					if(parser.seen('S')){
+						//set_laser_power(current_laser_power);
+            set_laser_power(128);
+            else;
+					} 
+				 
+			}
+}
 
 
 
@@ -7157,13 +7170,6 @@ SERIAL_PROTOCOLLNPGM(MSG_FOCUSING); //FOCUSING PRINT TO SERIAL
 
 
 
-/**
- * M17: Enable power on all stepper motors
- */
-inline void gcode_M17() {
-  LCD_MESSAGEPGM(MSG_NO_MOVE);
-  enable_all_steppers();
-}
 
 
 
@@ -13018,6 +13024,7 @@ void process_parsed_command() {
         case 4: gcode_M3_M4(false); break;                        // M4: Laser/CCW-Spindle Power
         case 5: gcode_M5(); break;                                // M5: Laser/Spindle OFF
         case 1500: gcode_M1500(); break;                          // M1500: Auto-Focus PHR-803T laser
+        case 1501: gcode_M1501(); break;                          // M1501: PHR-803T laser ON
       #endif
 
       case 17: gcode_M17(); break;                                // M17: Enable all steppers
