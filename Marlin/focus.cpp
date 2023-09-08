@@ -91,16 +91,16 @@ uint8_t get_focus_position(){
   for (uint8_t j = 0; j < MAX_FOCUS_SWEEP; j++){
     // Turn on laser
     turn_laser(ON);
-    //SERIAL_PROTOCOLLNPGM(DEBUG_LASER_TURNED_ON);
     //
     // Move servo to max position (close to the PCB)
     //
     move_focus_servo(FSERVO_MAX);
-    delay_ms(5); //WAS 5
-    //delayMicroseconds(5); //ADDED
+    //delay_ms(5); //WAS 5 //
+    delay_us(1200); //ADDED FOR TESTING MAYBE THIS IS BETTER?
+
     // Start to sampling and 
-    // set state to read S-curve amplitud
     start_fe_sampler();
+     // set state to read S-curve amplitud
     set_state(FE_AMPLITUD_ST);
     // Init variables
     fe_max_val = MIN_FE_VALUE;
@@ -135,7 +135,7 @@ uint8_t get_focus_position(){
       // and monitor FE value. When fe_state == FE_FOCUSED_ST
       // the laser is focused.
       set_state(FE_FOCUS_ST);
-
+////THIS SECTION CAN BE IMPROVED////
 	  for (;;){
         if (fe_servo_pos++ == FSERVO_MAX)
 			break;
@@ -159,6 +159,7 @@ uint8_t get_focus_position(){
     stop_fe_sampler();
     turn_laser(OFF);
   }
+  ////THIS SECTION CAN BE IMPROVED////
   //
   // Max attempts, stop sampling and return error
   //
