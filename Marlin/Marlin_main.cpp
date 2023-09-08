@@ -7121,7 +7121,6 @@ SERIAL_PROTOCOLLNPGM(MSG_FOCUSING); //FOCUSING PRINT TO SERIAL
 		if ((sys.current_focus_pos = auto_focus()) == FOCUS_ERROR){
       SERIAL_PROTOCOLLNPGM(MSG_ERROR); //INSTEAD OF sendError(); FUNCTION
 			SERIAL_ERRORLNPGM(MSG_FOCUS_ERROR);
-      //SERIAL_ECHOLN((int)sys.current_focus_pos); //ADDED FOR DEBUGGING
 	   }
     else {
 			SERIAL_PROTOCOLLNPGM(MSG_OK);//INSTEAD OF clearToSend(); FUNCTION
@@ -7151,7 +7150,7 @@ SERIAL_PROTOCOLLNPGM(MSG_FOCUSING); //FOCUSING PRINT TO SERIAL
 
 
 /**
-  * M1501 PHR-803T Laser On // M1501  power S = % of power from 0 to max.
+  * M1501 PHR-803T Laser ON // M1501  power S = % of power from 0 to max.
   */
 //inline void gcode_M1501() {
 //{
@@ -7164,6 +7163,14 @@ SERIAL_PROTOCOLLNPGM(MSG_FOCUSING); //FOCUSING PRINT TO SERIAL
 //			}
 //}
 
+/**
+  * M1502 PHR-803T Laser OFF
+  */
+  inline void gcode_M1502() {
+    planner.synchronize();
+     turn_laser(OFF);
+    delay_for_power_down();
+  }
 
 
 
@@ -13033,6 +13040,7 @@ void process_parsed_command() {
         case 5: gcode_M5(); break;                                // M5: Laser/Spindle OFF
         case 1500: gcode_M1500(); break;                          // M1500: Auto-Focus PHR-803T laser
         //case 1501: gcode_M1501(); break;                          // M1501: PHR-803T laser ON
+        case 1502: gcode_M1502(); break;                          // M1502: PHR-803T laser OFF
       #endif
 
        case 17: gcode_M17(); break;                                // M17: Enable all steppers

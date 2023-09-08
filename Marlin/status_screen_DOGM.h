@@ -263,6 +263,51 @@ static void lcd_implementation_status_screen() {
     #if HOTENDS < 4 && HAS_HEATED_BED
       _draw_heater_status(STATUS_SCREEN_BED_TEXT_X, -1, blink);
     #endif
+///BELOW IS MOFIDIED///
+
+    #if ENABLED(SPINDLE_LASER_ENABLE) 
+        #define     LCD_LASER_BOX_X     35       //Horizontal position of the laser Box    
+        u8g.drawFrame(LCD_LASER_BOX_X, 0,51,28); // draw box
+    #endif    
+
+
+         const int16_t laserPower = (((digitalRead(LASER_CURRENT_PIN))*100)/256);  
+         const int16_t laserTemp = thermalManager.degHotend(0);
+
+        
+
+          if(laserPower > 0 && digitalRead(LASER_ENABLE_PIN) == HIGH){
+          lcd_setstatus(" DANGER!Laser Firing!");
+          u8g.drawBitmapP(6,4, LASERENABLE_BYTEWIDTH, LASERENABLE_HEIGHT, laserenable_bmp);  
+          u8g.drawBitmapP(LCD_LASER_BOX_X + 4, 8, LASER_ICON_BYTEWIDTH, LASER_ICON_HEIGHT, laseron_bmp);
+          u8g.setPrintPos(LCD_LASER_BOX_X + 22, 9);
+          u8g.print(laserPower);
+          lcd_printPGM(PSTR("%")); 
+          }        
+     else if (laserPower > 0 && digitalRead(LASER_ENABLE_PIN) == LOW) {
+          lcd_setstatus("    Laser Disarmed.    "); 
+          //fanSpeeds[1] = 0 ;                                                      // sets laser power to 0 if key laser is disarmed, stops laser form refiring     
+          u8g.drawBitmapP(12,8, LASER_ICON_BYTEWIDTH, LASER_ICON_HEIGHT, lockicon_bmp);                                      
+          u8g.drawBitmapP(LCD_LASER_BOX_X + 4, 8, LASER_ICON_BYTEWIDTH, LASER_ICON_HEIGHT, laseroff_bmp);
+          u8g.setPrintPos(LCD_LASER_BOX_X + 22, 9);
+          lcd_printPGM(PSTR("---%"));
+          }
+     else {
+          u8g.drawBitmapP(LCD_LASER_BOX_X + 4, 8, LASER_ICON_BYTEWIDTH, LASER_ICON_HEIGHT, laseroff_bmp);
+          u8g.setPrintPos(LCD_LASER_BOX_X + 22, 9);      
+          lcd_printPGM(PSTR("---%"));
+          if (digitalRead(LASER_ENABLE_PIN) == HIGH){
+              lcd_setstatus("     Laser ARMED!    ");
+              u8g.drawBitmapP(12,8, LASER_ICON_BYTEWIDTH, LASER_ICON_HEIGHT, unlockicon_bmp);
+              }
+          else if (digitalRead(LASER_ENABLE_PIN) == LOW){
+              lcd_setstatus("    Laser Disarmed.    ");
+              u8g.drawBitmapP(12,8, LASER_ICON_BYTEWIDTH,LASER_ICON_HEIGHT, lockicon_bmp); 
+              }        
+          }
+
+
+///ABOVE IS MODFIFIED
 
     #if HAS_FAN0
       if (PAGE_CONTAINS(STATUS_SCREEN_FAN_TEXT_Y - 7, STATUS_SCREEN_FAN_TEXT_Y)) {

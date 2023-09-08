@@ -73,42 +73,6 @@ void laser_end()
 }
 
 
-/**
- ** set_laser_power() - Sets the intensity of laser
- **/
-//void set_laser_power(uint8_t level){
-// SET_OUTPUT(LASER_CURRENT_PIN);
-//  TCCR4A |= (1 << COM4A1); //MODIFIED
-//  OCR4A = level; //MODIFIED
-//}
-/**
- ** get_laser_power() - Get the intensity of laser
- **/
-//uint8_t get_laser_power(){
-//  return OCR4A;
-//}
-
-/**
-** turn_laser() - Fires the laser on/off
-**/
-//void turn_laser(uint8_t mode){
-//	if (mode == ON){
-//		WRITE(LASER_ENABLE_PIN,HIGH);
-//		laser_on = true;
-//	}
-//	else {
-//		WRITE(LASER_ENABLE_PIN,LOW);
-//		laser_on = false;
-//	}
-//}
-
-
-/**
- ** is_laser_on() - Returns true is laser is on
- **/
-//bool is_laser_on(){
-//  return laser_on;
-//}
 
 /**
 ** move_focus_servo() - Moves the lens of the pickup
