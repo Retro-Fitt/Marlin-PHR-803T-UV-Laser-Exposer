@@ -23,14 +23,14 @@
 #include "Marlin.h"
 #include "laser_control.h"
 
-bool static laser_on = false;
+//bool static laser_on = false;
 /**
- ** laser_init() - Inits the laser subsystem
+ ** laser_init() - Inits the laser subsystem //CHECKED OK
  **/
 void laser_init()
 {
   laser_on = false;
-  SET_OUTPUT(LASER_ENABLE_PIN);
+    SET_OUTPUT(LASER_ENABLE_PIN);
   	// Set laser focus step (5) pin, OC3A Timer 3, fast pwm
 	SET_OUTPUT(FSERVO_STEP_PIN);
 	OCR3AH = 0;
@@ -40,7 +40,8 @@ void laser_init()
 	TCCR3C = 0;
 	TCCR3A |= (1 << WGM30); // Fast PWM mode on pin 5
 	TCCR3B |=  (1 << CS30); // No prescale 65000Khz.
-	// Set laser current (6) pin OC4A Timer 4, fast pwm
+
+	// Set laser current (6) pin OC4A Timer 4, fast pwm //CHECKED OK
 	SET_OUTPUT(LASER_CURRENT_PIN);
 	OCR4AH = 0;
 	OCR4AL = 0;
@@ -53,48 +54,68 @@ void laser_init()
 
 
 /**
+** laser_end() - End the laser subsystem
+**/
+void laser_end()
+{
+	turn_laser(OFF); //TO BE CHECKED
+	set_laser_power_off();
+	OCR3AH = 0;
+	OCR3AL = 0;
+	OCR4AH = 0;
+	OCR4AL = 0;
+	TCCR3A = 0;
+	TCCR3B = 0;
+	TCCR3C = 0;
+	TCCR4A = 0;
+	TCCR4B = 0;
+	TCCR4C = 0;
+}
+
+
+/**
  ** set_laser_power() - Sets the intensity of laser
  **/
-void set_laser_power(uint8_t level){
-  SET_OUTPUT(LASER_CURRENT_PIN);
-  TCCR4A |= (1 << COM4A1); //MODIFIED
-  OCR4A = level; //MODIFIED
-}
+//void set_laser_power(uint8_t level){
+// SET_OUTPUT(LASER_CURRENT_PIN);
+//  TCCR4A |= (1 << COM4A1); //MODIFIED
+//  OCR4A = level; //MODIFIED
+//}
 /**
  ** get_laser_power() - Get the intensity of laser
  **/
-uint8_t get_laser_power(){
-  return OCR4A;
-}
+//uint8_t get_laser_power(){
+//  return OCR4A;
+//}
 
 /**
 ** turn_laser() - Fires the laser on/off
 **/
-void turn_laser(uint8_t mode){
-	if (mode == ON){
-		WRITE(LASER_ENABLE_PIN,HIGH);
-		laser_on = true;
-	}
-	else {
-		WRITE(LASER_ENABLE_PIN,LOW);
-		laser_on = false;
-	}
-}
+//void turn_laser(uint8_t mode){
+//	if (mode == ON){
+//		WRITE(LASER_ENABLE_PIN,HIGH);
+//		laser_on = true;
+//	}
+//	else {
+//		WRITE(LASER_ENABLE_PIN,LOW);
+//		laser_on = false;
+//	}
+//}
 
 
 /**
  ** is_laser_on() - Returns true is laser is on
  **/
-bool is_laser_on(){
-  return laser_on;
-}
+//bool is_laser_on(){
+//  return laser_on;
+//}
 
 /**
 ** move_focus_servo() - Moves the lens of the pickup
 **/
 void move_focus_servo(uint8_t pos){
-	//delay_us(3); //WAS 3
-	delayMicroseconds(3); //ADDED
+	delay_us(3); //WAS 3
+	//delayMicroseconds(3); //ADDED
 	SET_OUTPUT(FSERVO_STEP_PIN);
 	set_focus_pos(pos);
 }

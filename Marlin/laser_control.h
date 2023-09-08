@@ -24,12 +24,61 @@ copies.
 #ifndef LASER_CONTROL_H
 #define LASER_CONTROL_H
 
+bool static laser_on = false;
+
 void laser_init();
-void turn_laser(uint8_t mode);
-void set_laser_power(uint8_t level);
-uint8_t get_laser_power();
+//void turn_laser(uint8_t mode);
+//void set_laser_power(uint8_t level);
+//uint8_t get_laser_power();
+//void move_focus_servo(uint8_t pos);
+//bool is_laser_on();
+
+void laser_end();
 void move_focus_servo(uint8_t pos);
-bool is_laser_on();
+
+
+/**
+** set_laser_on() - Fires the laser modifing power level 0 - 128
+** It's assumed that laser was previously turned on with turn_laser_on()
+**/
+FORCE_INLINE void set_laser_power(uint8_t level){	
+	TCCR4A |= (1 << COM4A1);
+	OCR4AH = 0;
+	OCR4AL = level;
+}
+
+/**
+** set_laser_power_off() - Stop the laser but modifing power level
+** It's assumed that laser was previously turned on with turn_laser_on().
+**/
+FORCE_INLINE void set_laser_power_off(){
+
+	TCCR4A |= (1 << COM4A1);
+	OCR4AH = 0;
+	OCR4AL = 0;
+}
+
+
+/**
+** get_laser_power() - Get the intensity of laser
+**/
+FORCE_INLINE uint8_t get_laser_power(){
+	return OCR4AL;
+}
+
+/**
+** turn_laser() - Fires the laser on/off
+**/
+FORCE_INLINE void turn_laser(uint8_t mode){
+	if (mode == ON){
+		WRITE(LASER_ENABLE_PIN,HIGH);
+		laser_on = true;
+	}
+	else {
+		WRITE(LASER_ENABLE_PIN,LOW);
+		laser_on = false;
+	}
+}
 
 /**
 ** set_focus_pos() - Moves the focus lens (Servo) to the focus position

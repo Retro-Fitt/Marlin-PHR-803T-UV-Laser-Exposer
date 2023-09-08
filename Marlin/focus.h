@@ -39,12 +39,12 @@ copies.
 #define FSERVO_MIN         0	// Focus servo min position (inside pickup)
 #define FSERVO_MAX         230	// Focus servo max position (outside)
 #define FSERVO_CENTER      128  // Focus servo center
-#define MAX_FOCUS_SWEEP    5    // Max focus attempts
-#define NUM_FOCUS_SAMPLES  15   // Num focus samples
+#define MAX_FOCUS_SWEEP    6    // Max focus attempts //MODIFIED
+#define NUM_FOCUS_SAMPLES  10   // Num focus samples //MODIFIED
 #define FOCUS_TIMEOUT      30000  // Focus timeout in ADC ticks at 2000Khz.
 
-#define FE_MIN_AMP_THRESHOLD  128  // No object limit //MODIFIED FOR TESTING WAS 128
-#define FE_NOISE_DIVIDER	   3  // Used to find the noise threshold
+#define FE_MIN_AMP_THRESHOLD  30  // No object limit //MODIFIED FOR TESTING WAS 128 //THIS IS IMPORTANT PARAMETER
+#define FE_NOISE_DIVIDER	   2  // Used to find the noise threshold //MODIFIED FOR TESTING WAS 3 //THIS IS IMPORTANT PARAMETER
 #define FE_AMPLITUD_DIVIDER   48  // Amplitud/(this) is the focus threshold 
 
 #define FE_WAIT_ST         0	// Waiting
@@ -52,13 +52,13 @@ copies.
 #define FE_FOCUS_ST        2	// Begin focus state
 #define FE_SCURVE_ST       3	// Scurve detected
 #define FE_FOCUSED_ST      4	// Focused
-#define FE_ERROR_ST        5    // Timeout error
+#define FE_ERROR_ST        5  // Timeout error
 
-uint8_t auto_focus();
-uint8_t get_focus_position();
-void start_fe_sampler();
-void stop_fe_sampler();
-void set_state(uint8_t state);
-uint8_t calc_mode(uint8_t *value, uint8_t num);
+uint8_t auto_focus(); //OK CHECKED
+uint8_t get_focus_position(); //OK CHECKED
+void start_fe_sampler(); //OK CHECKED
+void stop_fe_sampler(); //OK CHECKED
+void set_state(uint8_t state); //OK CHECKED
+uint8_t calc_mode(uint8_t *value, uint8_t num); //OK CHECKED
 
 #endif
