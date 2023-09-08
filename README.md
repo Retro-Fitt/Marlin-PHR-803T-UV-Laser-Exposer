@@ -116,35 +116,37 @@ Do not expose dry film to sun light, use dry film only in yellow light.
 Keep in cold place, no moisture or excessive temperatures. 
 Lamination, Developing and stripping processes are temperature critical.
 
-I use Potassium Carbonate to etch and NaOH for stripping PCB. For final dissolving i prefer FeCl3.02
+I use Potassium Carbonate to etch and NaOH for stripping PCB. For final dissolving i prefer FeCl3.
 
 # TO DO LIST:
 
-Not working for now: ⛔
+Not working or work in progress for now: ⛔
 
-* Auto-Focus Code M1500 Custom Code :rage4:
-* Custom Timers for PWM⏲️
 * Home Screen Icons and Bootscreen🏠
 * Documentation 📖
+* Laser on/off, code is based of M3/M5, custom code is necessary
 
+Working but will checked on production :suspect:
+
+* Auto-Focus works now. M1500 :godmode:
   
 Working And Tested: 🆗
 
-* Laser on/off, code is based of M3/M5
 * Custom Menu Enabled and Laser Power Levels implemented
 * Homing X-Y works
 * Arduino Pins Map
 * LCD interface
 * SD Card interface
 * Buzzer Interface
+* Custom Timers works and Focus servo is also converted to PWM and TIMER 
 
-## Why i use/make this instead of UV lasers on market? ❔
+## Why i use/make this instead of UV lasers on market❔
 
 * My main attraction is in this project is **resolution**. I mostly deal with high density QFN and QFP packages which may have 0.1mm pin pitch.
 
-* Modified 
+* Modified Laser Printer Head assemblies can be used also for lithography. There are people in Youtube "Homemade Laser Exposer" who modified old laser printer, added UV laser to rotating mirror. They seem very fast for non resolution required applications.
 
-## Why i don't use PCB services? ❓
+## Why i don't use PCB services❓
 
 * I need quick PCB prototypes. Tried many PCB services but in avarage it comes in my door afer 27 days. Even i make one mistake on PCB design i have to wait approx 27 days to test it. So lack of motivation occurs on that project.
 
