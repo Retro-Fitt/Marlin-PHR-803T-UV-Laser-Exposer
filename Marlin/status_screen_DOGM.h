@@ -271,7 +271,7 @@ static void lcd_implementation_status_screen() {
     #endif    
 
 
-         const int16_t laserPower = (((digitalRead(LASER_CURRENT_PIN))*100)/256);  
+         const int16_t laserPower = (((0)*100)/256);  // THIS PIN READ MAY BREAK CODE
          const int16_t laserTemp = thermalManager.degHotend(0);
 
         
